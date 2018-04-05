@@ -19,11 +19,22 @@ mongoose.Promise = Promise;
 mongoose.connect("mongodb://localhost/HardwareScraper");
 var PORT = 3000;
 
+app.get("/", function(req,res){
+    db.Hardware.find({})
+    .then(function(dbHardware){
+        let data={
+            data:dbHardware
+        }
+        res.render("home", data)
+    }).catch(function(err){
+        res.json(err)
+    })
 
+})
 app.get("/scrape", function(req,res){
 
     request("https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100007709%204814%20601201888%20601203793%20601204369%20601296707%20601301599&IsNodeId=1&cm_sp=Cat_video-Cards_1-_-Visnav-_-Gaming-Video-Cards_1", function(error, response, html) {
-    var $ = cheerio.load(html);
+            var $ = cheerio.load(html);
   
     var results = [];
   
@@ -33,28 +44,30 @@ app.get("/scrape", function(req,res){
       var title = $(element).find("a").children().attr("title")
       var image = $(element).find("a").children().attr("src")
       var price = $(element).find("div.item-info").find("div.item-action").find("ul.price").find("li.price-current").find("strong").text()
-      
+      if(i <= 19){
       results.push({
         link:link,
         title:title,
         image:image,
         price:price
       })
-    
+
       db.Hardware.create(results).then(function(dbHardware){
         console.log(dbHardware)
       }).catch(function(err){
           res.json(err)
       })
+    }else {return false; res.redirect("/")}
     })
     console.log(results)
 
   });
-    res.send("Scrape complete")
+    res.redirect("/")
   })
   
 app.get("/hardware", function(req,res){
     db.Hardware.find({})
+    // .limit(15)
     .then(function(dbHardware){
         res.json(dbHardware)
     }).catch(function(err){
