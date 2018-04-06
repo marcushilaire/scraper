@@ -84,7 +84,8 @@ app.get("/scrape", function(req,res){
     }else {return false; //res.redirect("/")
 }
     })
-    res.redirect("/")
+    res.send("scraped")
+    // res.redirect("/")
 
   });
   })
