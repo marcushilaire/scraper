@@ -19,6 +19,10 @@ mongoose.Promise = Promise;
 mongoose.connect("mongodb://localhost/HardwareScraper");
 var PORT = 3000;
 
+
+
+//HTML routes
+
 app.get("/", function(req,res){
     db.Hardware.find({})
     .then(function(dbHardware){
@@ -31,6 +35,16 @@ app.get("/", function(req,res){
     })
 
 })
+app.get("/:id", function(req,res){
+    db.Hardware.findOne({_id:req.params.id}).populate("note")
+    .then(function(dbHardware){
+        let data={
+            data:dbHardware
+        }
+        res.render("notes", data)
+    })
+})
+
 app.get("/scrape", function(req,res){
 
     request("https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100007709%204814%20601201888%20601203793%20601204369%20601296707%20601301599&IsNodeId=1&cm_sp=Cat_video-Cards_1-_-Visnav-_-Gaming-Video-Cards_1", function(error, response, html) {
@@ -64,7 +78,10 @@ app.get("/scrape", function(req,res){
   });
     res.redirect("/")
   })
-  
+
+
+
+// JSON routes
 app.get("/hardware", function(req,res){
     db.Hardware.find({})
     // .limit(15)
