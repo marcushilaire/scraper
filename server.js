@@ -48,11 +48,11 @@ app.get("/notes/:id", function(req,res){
 })
 
 app.get("/scrape", function(req,res){
-    // db.Hardware.remove({});
     request("https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100007709%204814%20601201888%20601203793%20601204369%20601296707%20601301599&IsNodeId=1&cm_sp=Cat_video-Cards_1-_-Visnav-_-Gaming-Video-Cards_1", function(error, response, html) {
             var $ = cheerio.load(html);
   
     var results = [];
+    var resultObj={}
   
 
     $("div.item-container").each(function(i,element){
@@ -61,23 +61,31 @@ app.get("/scrape", function(req,res){
       var image = $(element).find("a").children().attr("src")
       var price = $(element).find("div.item-info").find("div.item-action").find("ul.price").find("li.price-current").find("strong").text()
       if(i <= 19){
-      results.push({
+    //   results.push({
+    //     link:link,
+    //     title:title,
+    //     image:image,
+    //     price:price
+    //   })
+      resultObj={
         link:link,
         title:title,
         image:image,
         price:price
-      })
+      }
 
-      db.Hardware.create(results).then(function(dbHardware){
+    //   db.Hardware.create(results)
+      db.Hardware.create(resultObj)
+      .then(function(dbHardware){
         console.log(dbHardware)
       }).catch(function(err){
-          res.json(err)
+          return res.json(err)
       })
     }else {return false; //res.redirect("/")
 }
     })
-    console.log(results)
     res.redirect("/")
+
   });
   })
 
