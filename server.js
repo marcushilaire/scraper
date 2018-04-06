@@ -5,7 +5,7 @@ var request = require("request")
 var mongoose = require("mongoose");
 var exphbs = require("express-handlebars");
 var app = express();
-console.log("relaunch");
+console.log("launch");
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
