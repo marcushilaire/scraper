@@ -61,7 +61,7 @@ app.get("/scrape", function(req,res){
       var title = $(element).find("a").children().attr("title")
       var image = $(element).find("a").children().attr("src")
       var price = $(element).find("div.item-info").find("div.item-action").find("ul.price").find("li.price-current").find("strong").text()
-      if(i <= 19){
+    //   if(i <= 19){
     //   results.push({
     //     link:link,
     //     title:title,
@@ -82,8 +82,8 @@ app.get("/scrape", function(req,res){
       }).catch(function(err){
           return res.json(err)
       })
-    }else {return false; //res.redirect("/")
-}
+//     }else {return false; //res.redirect("/")
+// }
     })
     res.send("scraped")
     // res.redirect("/")
