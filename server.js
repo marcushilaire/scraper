@@ -15,12 +15,11 @@ app.use(bodyParser.json());
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-
+var PORT = process.env.PORT || 3000;
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 var db = require("./models");
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
-var PORT = process.env.PORT || 3000;
 
 
 
