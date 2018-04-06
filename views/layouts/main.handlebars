@@ -11,8 +11,19 @@
 
   <title>Desktop GPU</title>
 </head>
-
+<div class=" jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1>Compare Graphics cards</h1>
+   <button class="btn btn-success" id="scrape">Scrape for more cards</button>
+  </div>
+</div>
 	<body>
+
 		{{{ body }}}
+    <script>
+      $("#scrape").on("click",function(){
+    window.location.replace(`/scrape`)
+})
+    </script>
 	</body>
 </html>

@@ -6,6 +6,14 @@
             <h4 class="card-title">{{this.title}}</h4>
         </a>
       <br>
+         
+         <button class="comments btn btn-warning" data-id={{this.id}}>View Notes</button>
+         </a>
          <h3>$ {{this.price}}</h3>
     </div>
   </div>
+  <script>
+$(".comments").on("click",function(){
+    window.location.replace(`/notes/${$(this).attr("data-id")}`)
+})
+  </script>

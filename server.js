@@ -35,7 +35,7 @@ app.get("/", function(req,res){
     })
 
 })
-app.get("/:id", function(req,res){
+app.get("/notes/:id", function(req,res){
     db.Hardware.findOne({_id:req.params.id}).populate("note")
     .then(function(dbHardware){
         let data={
@@ -46,7 +46,7 @@ app.get("/:id", function(req,res){
 })
 
 app.get("/scrape", function(req,res){
-
+    db.Hardware.remove({});
     request("https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100007709%204814%20601201888%20601203793%20601204369%20601296707%20601301599&IsNodeId=1&cm_sp=Cat_video-Cards_1-_-Visnav-_-Gaming-Video-Cards_1", function(error, response, html) {
             var $ = cheerio.load(html);
   
@@ -101,6 +101,7 @@ app.get("/hardware/:id", function(req,res){
     })
 })
 app.post("/hardware/:id", function(req,res){
+    console.log(req.body)
     db.Note.create(req.body).then(function(dbNote){
         return db.Hardware.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
     }).then(function(dbHardware){res.json(dbHardware)})
