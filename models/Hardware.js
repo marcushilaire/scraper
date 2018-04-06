@@ -7,18 +7,18 @@ var HardwareSchema = new Schema({
   title: {
     type: String,
     required: true,
-    unique: true
+    // unique: true
   },
   link: {
     type: String,
     required: true,
-    unique: true
+    // unique: true
 
   },
   image:{
     type: String,
     required:true,
-    unique: true
+    // unique: true
   },
   price:{
     type: String,
