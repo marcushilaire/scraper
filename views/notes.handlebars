@@ -4,12 +4,16 @@
 <br>
 <label >Comment</label>          
 <textarea class="form-control" id="userComment" rows="3" placeholder="Comment"></textarea>
-<button data-hardwareID={{data._id}} class="btn btn-warning" id="postComment" ></button>
+<button data-hardwareID={{data._id}} class="btn btn-warning" id="postComment" >Comment </button>
 </div>
-{{#each data.note}}
+<br>
+{{#if data.note}}
+        <div class="container">
         <div class="col-md-4 col-sm-6 col-xs-12 mb-3">
 {{> comments}}
         </div>
-{{/each}}
+        </div>
+{{/if}}
+
 </div>
 <script src="../comments.js"></script>

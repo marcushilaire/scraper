@@ -46,7 +46,7 @@ app.get("/notes/:id", function(req,res){
 })
 
 app.get("/scrape", function(req,res){
-    db.Hardware.remove({});
+    // db.Hardware.remove({});
     request("https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100007709%204814%20601201888%20601203793%20601204369%20601296707%20601301599&IsNodeId=1&cm_sp=Cat_video-Cards_1-_-Visnav-_-Gaming-Video-Cards_1", function(error, response, html) {
             var $ = cheerio.load(html);
   
@@ -71,12 +71,12 @@ app.get("/scrape", function(req,res){
       }).catch(function(err){
           res.json(err)
       })
-    }else {return false; res.redirect("/")}
+    }else {return false; //res.redirect("/")
+}
     })
     console.log(results)
-
-  });
     res.redirect("/")
+  });
   })
 
 
@@ -103,12 +103,20 @@ app.get("/hardware/:id", function(req,res){
 app.post("/hardware/:id", function(req,res){
     console.log(req.body)
     db.Note.create(req.body).then(function(dbNote){
-        return db.Hardware.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+        return db.Hardware.findOneAndUpdate({ _id: req.params.id }, 
+            {note: dbNote._id },
+             { new: true });
     }).then(function(dbHardware){res.json(dbHardware)})
     .catch(function(err){
         res.json(err)
     })
 })
+app.post("/delete/:id", function(req,res){
+    db.Note.findOneAndRemove({_id: req.params.id}).then(function(dbHardware){
+      res.json(dbHardware)
+    })
+    console.log("deleted")
+  })
 app.listen(PORT, function(){
     console.log("app loaded "+ PORT)
 })

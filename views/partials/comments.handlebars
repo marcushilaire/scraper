@@ -1,8 +1,10 @@
-  <div class="card" data-id="{{this.id}}">
+
+  <div class="card" data-id="{{data.note._id}}">
     <div class="card-body">
-        <h4 class="card-title">{{this.title}}</h4>
+        <h4 class="card-title">{{data.note.title}}</h4>
     <hr>
-        <p>{{this.body}}</p>
+        <p>{{data.note.body}}</p>
 
     </div>
+    <button class="deleteComment btn btn-danger" data-id="{{data.note._id}}"> Delete this comment</button>
   </div>
