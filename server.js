@@ -15,9 +15,11 @@ app.use(express.static("public"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines"
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/HardwareScraper");
-var PORT = 3000;
+mongoose.connect(MONGODB_URI);
+var PORT = process.env.PORT || 3000;
 
 
 
